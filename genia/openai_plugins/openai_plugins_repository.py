@@ -59,7 +59,7 @@ class OpenAIPluginsRepository:
 
     def get_all_plugins(self, base_url):
         try:
-            response = requests.get(base_url)
+            response = requests.get(base_url, timeout=60)
             # Check if the response status code is successful (200 OK)
             if response.status_code == 200:
                 # Parse the JSON response

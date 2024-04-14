@@ -10,7 +10,7 @@ class URLFunction(LLMFunction):
     logger = logging.getLogger(__name__)
 
     def evaluate(self, function_config: dict, parameters: dict) -> Any:
-        response = requests.get(self.format_url(function_config, parameters))
+        response = requests.get(self.format_url(function_config, parameters), timeout=60)
         try:
             return response.json()
         except ValueError:

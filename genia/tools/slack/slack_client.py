@@ -18,6 +18,6 @@ class SlackClient:
         headers = {"Content-type": "application/json"}
         payload = {"text": message}
 
-        response = requests.post(webhook_url, headers=headers, data=json.dumps(payload))
+        response = requests.post(webhook_url, headers=headers, data=json.dumps(payload), timeout=60)
         self.logger.info(f"slack message sent response: {response}")
         response.raise_for_status()

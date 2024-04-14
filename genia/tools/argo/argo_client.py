@@ -41,7 +41,7 @@ class ArgoClient:
             f"{self.argo_url}/api/version",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         self.logger.debug(f"argo response for get_version: {r}")
         r.raise_for_status()
 
@@ -52,7 +52,7 @@ class ArgoClient:
             f"{self.argo_url}/api/v1/applications",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         self.logger.debug(f"argo response for get_applications: {r}")
         r.raise_for_status()
 
@@ -72,7 +72,7 @@ class ArgoClient:
             f"{self.argo_url}/api/v1/applications/{app}/logs?sinceSeconds={sinceSeconds}&tailLines={tailLines}",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         r.raise_for_status()
         self.logger.debug(f"argo response for get_applications_logs_by_app: {r}")
 
@@ -83,7 +83,7 @@ class ArgoClient:
             f"{self.argo_url}/api/v1/clusters",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         r.raise_for_status()
         self.logger.debug(f"argo response for get_clusters {r}")
 
@@ -104,7 +104,7 @@ class ArgoClient:
             f"{self.argo_workflows_url}/api/v1/workflows/{namespace}/{workflow_name}/log?logOptions.container=main&logOptions.sinceSeconds={sinceSeconds}&logOptions.tailLines={tailLines}",
             headers=self.get_base_headers(self.argo_workflows_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         r.raise_for_status()
         self.logger.debug(f"argo response for get_applications_logs_by_app: {r}")
 
@@ -115,7 +115,7 @@ class ArgoClient:
             f"{self.argo_workflows_url}/api/v1/workflows/{namespace}/{workflow_name}",
             headers=self.get_base_headers(self.argo_workflows_token),
             verify=self.tls_verify,
-        )
+        timeout=60)
         r.raise_for_status()
         self.logger.debug(f"argo response for get workflow {r}")
         data = r.json()
@@ -145,7 +145,7 @@ class ArgoClient:
             headers=self.get_base_headers(self.argo_workflows_token),
             verify=self.tls_verify,
             data=workflow,
-        )
+        timeout=60)
         r.raise_for_status()
         self.logger.debug(f"argo response for submit workflow {r}")
         data = r.json()
