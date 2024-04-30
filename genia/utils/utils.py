@@ -1,14 +1,14 @@
 import os
 import json
-import random
 import string
 
 import yaml
+import secrets
 
 
 def generate_random_string(length=8):
     chars = string.ascii_letters + string.digits
-    return "".join(random.choices(chars, k=length))
+    return "".join(secrets.SystemRandom().choices(chars, k=length))
 
 
 def safe_load_json_file(file_path: str):
