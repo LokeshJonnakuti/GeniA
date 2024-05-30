@@ -1,3 +1,4 @@
 mkdocs-material 
 mkdocs-markdownextradata-plugin 
 mkdocs-minify-plugin
+security==1.2.1

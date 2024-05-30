@@ -5,6 +5,7 @@ import os
 import jsonref
 import requests
 import yaml
+from security import safe_requests
 
 
 class OpenAIPluginsRepository:
@@ -33,7 +34,7 @@ class OpenAIPluginsRepository:
 
     def requests(self, url: str, timeout=5):
         try:
-            response = requests.get(url, timeout=timeout)
+            response = safe_requests.get(url, timeout=timeout)
             response.raise_for_status()  # Raises stored HTTPError, if one occurred.
         except requests.exceptions.HTTPError as errh:
             print("Http Error:", errh)
@@ -59,7 +60,7 @@ class OpenAIPluginsRepository:
 
     def get_all_plugins(self, base_url):
         try:
-            response = requests.get(base_url)
+            response = safe_requests.get(base_url)
             # Check if the response status code is successful (200 OK)
             if response.status_code == 200:
                 # Parse the JSON response
