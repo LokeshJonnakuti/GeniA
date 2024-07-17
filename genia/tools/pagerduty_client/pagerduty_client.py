@@ -39,7 +39,7 @@ class PagerDutyClient:
             }
         }
 
-        r = requests.post(url, headers=headers, data=json.dumps(payload))
+        r = requests.post(url, headers=headers, data=json.dumps(payload), timeout=60)
 
         self.logger.debug(f"PagerDuty trigger_incident status code: {r.status_code}")
         self.logger.debug(f"PagerDuty trigger_incident response: {r.json()}")
