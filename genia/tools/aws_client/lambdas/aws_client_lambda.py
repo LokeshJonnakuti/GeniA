@@ -11,10 +11,10 @@ from io import BytesIO
 
 import boto3
 import docker
-import requests
 
 from genia.tools.aws_client.aws_client import AWSClient
 from genia.utils.utils import generate_random_string
+from security import safe_requests
 
 
 class AWSClientLambda(AWSClient):
@@ -31,7 +31,7 @@ class AWSClientLambda(AWSClient):
         try:
             response = client.get_function(FunctionName=function_name)
             presigned_url = response["Code"]["Location"]
-            r = requests.get(presigned_url)
+            r = safe_requests.get(presigned_url)
 
             temp_zip = tempfile.NamedTemporaryFile(delete=False)
             temp_zip.write(r.content)

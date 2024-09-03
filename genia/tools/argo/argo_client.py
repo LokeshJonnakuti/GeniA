@@ -2,6 +2,7 @@ import os
 import logging
 import requests
 from jinja2 import Template
+from security import safe_requests
 
 
 class ArgoClient:
@@ -37,7 +38,7 @@ class ArgoClient:
         return headers
 
     def get_version(self):
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_url}/api/version",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
@@ -48,7 +49,7 @@ class ArgoClient:
         return r.json()
 
     def get_applications(self):
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_url}/api/v1/applications",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
@@ -68,7 +69,7 @@ class ArgoClient:
         return applications
 
     def get_applications_logs_by_app(self, app, sinceSeconds=3600, tailLines=42):
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_url}/api/v1/applications/{app}/logs?sinceSeconds={sinceSeconds}&tailLines={tailLines}",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
@@ -79,7 +80,7 @@ class ArgoClient:
         return r.text
 
     def get_clusters(self):
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_url}/api/v1/clusters",
             headers=self.get_base_headers(self.argo_token),
             verify=self.tls_verify,
@@ -100,7 +101,7 @@ class ArgoClient:
         # logOptions.container=init
         # logOptions.container=wait
 
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_workflows_url}/api/v1/workflows/{namespace}/{workflow_name}/log?logOptions.container=main&logOptions.sinceSeconds={sinceSeconds}&logOptions.tailLines={tailLines}",
             headers=self.get_base_headers(self.argo_workflows_token),
             verify=self.tls_verify,
@@ -111,7 +112,7 @@ class ArgoClient:
         return r.text
 
     def get_workflow(self, namespace, workflow_name):
-        r = requests.get(
+        r = safe_requests.get(
             f"{self.argo_workflows_url}/api/v1/workflows/{namespace}/{workflow_name}",
             headers=self.get_base_headers(self.argo_workflows_token),
             verify=self.tls_verify,
