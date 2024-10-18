@@ -31,7 +31,7 @@ class AWSClientLambda(AWSClient):
         try:
             response = client.get_function(FunctionName=function_name)
             presigned_url = response["Code"]["Location"]
-            r = requests.get(presigned_url)
+            r = requests.get(presigned_url, timeout=60)
 
             temp_zip = tempfile.NamedTemporaryFile(delete=False)
             temp_zip.write(r.content)
