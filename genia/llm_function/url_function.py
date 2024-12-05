@@ -1,16 +1,15 @@
 import logging
-
-import requests
 from traitlets import Any
 
 from genia.llm_function.llm_function import LLMFunction
+from security import safe_requests
 
 
 class URLFunction(LLMFunction):
     logger = logging.getLogger(__name__)
 
     def evaluate(self, function_config: dict, parameters: dict) -> Any:
-        response = requests.get(self.format_url(function_config, parameters))
+        response = safe_requests.get(self.format_url(function_config, parameters))
         try:
             return response.json()
         except ValueError:
